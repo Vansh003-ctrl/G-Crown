@@ -1,8 +1,15 @@
 import React from 'react'
+import Navbar from './components/navbar'
+import Footr from './components/footer'
+import Home from './pages/homePage/Home'
 
 const App = () => {
   return (
-    <div className='bg'>App</div>
+    <>
+    <Navbar/>
+    <Home/>
+    <Footr/>
+    </>
   )
 }
 
