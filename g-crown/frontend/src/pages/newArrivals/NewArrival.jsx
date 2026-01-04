@@ -168,7 +168,7 @@ const NewArrival = () => {
 
           {/* Active Filters */}
           {hasActiveFilters && (
-            <div className="flex flex-wrap items-center gap-2 mb-8 p-3 bg-white/30 rounded-lg">
+            <div className="flex flex-wrap items-center gap-2 mb-8 p-3 rounded-lg">
               <span className="text-[16px] sm:text-[20px] font-medium font-cormorant text-[#1C3A2C]">Active Filters:</span>
               {isPriceFiltered && <FilterBadge label={`₹${priceRange[0].toLocaleString()} - ₹${priceRange[1].toLocaleString()}`} onRemove={() => removeFilter("price")} />}
               {selectedMaterials.map((m) => <FilterBadge key={m} label={m} onRemove={() => removeFilter("material", m)} />)}

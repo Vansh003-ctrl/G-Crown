@@ -118,7 +118,7 @@ const Collections = () => {
         </div>
 
         {/* Active Filters Row */}
-        <div className="flex flex-wrap items-center gap-3 mb-8 p-3 bg-white/30 rounded-lg">
+        <div className="flex flex-wrap items-center gap-3 mb-8 p-3  rounded-lg">
           <span className="text-[15px] font-[600] uppercase text-[#1C3A2C]">Active Filter</span>
           {[...selectedCategories, ...selectedMaterials, ...selectedColors].map(filter => (
             <span key={filter} className="bg-[#002D25] text-white px-3 py-1 text-[10px] flex items-center gap-2 uppercase">
