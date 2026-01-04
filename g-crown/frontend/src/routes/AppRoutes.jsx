@@ -12,12 +12,13 @@ import NewArrivals from "../pages/newArrivals/NewArrival.jsx";
 import Occasions from "../pages/occasions/Occasion.jsx";
 import Store from "../pages/store/Store.jsx";
 import AboutUs from "../pages/aboutUs/AboutUs.jsx";
-
+import ProductDetails from "../pages/ProductDetails/ProductDetails.jsx";
+import Profile from "./../pages/Profile/Profile.jsx"
 
 export default function AppRoutes() {
   const location = useLocation();
 
-  // Hide navbar & footer on auth pages
+  // navbar + footer hide only on auth pages
   const hideLayout =
     location.pathname === "/signin" ||
     location.pathname === "/signup";
@@ -30,11 +31,16 @@ export default function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+
         <Route path="/collections" element={<Collections />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/new-arrivals" element={<NewArrivals />} />
         <Route path="/occasions" element={<Occasions />} />
         <Route path="/store" element={<Store />} />
         <Route path="/about" element={<AboutUs />} />
+
+    
+        <Route path="/profile" element={<Profile />} />
       </Routes>
 
       {!hideLayout && <Footer />}

@@ -8,12 +8,14 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const navigate = useNavigate();
 
   /* ---------------- Scroll hide / show ---------------- */
   useEffect(() => {
@@ -41,11 +43,11 @@ export default function Navbar() {
 
   return (
     <>
-      {/*  NAVBAR */}
+      {/* NAVBAR */}
       <header
         className={`fixed top-0 left-0 w-full z-50 bg-[#0F231C]
-          transition-transform duration-300 ease-out
-          ${visible ? "translate-y-0" : "-translate-y-full"}`}
+        transition-transform duration-300 ease-out
+        ${visible ? "translate-y-0" : "-translate-y-full"}`}
       >
         <div className="mx-auto max-w-360 px-4 sm:px-6 lg:px-10">
           <div className="relative flex h-22 items-center justify-between">
@@ -69,14 +71,7 @@ export default function Navbar() {
             </div>
 
             {/* LOGO */}
-            <div
-              className="
-                      absolute left-1/2
-                      top-1/2
-                      -translate-x-1/2 -translate-y-1/2
-                      lg:top-3/4
-                    "
-            >
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:top-3/4">
               <img
                 src={Logo}
                 alt="Graphura Jewellery"
@@ -91,15 +86,20 @@ export default function Navbar() {
             </div>
 
             {/* DESKTOP ICONS */}
-            <div className="hidden lg:flex items-center gap-3">
-              {[Heart, ShoppingCart, MapPin, User].map((Icon, i) => (
-                <IconButton key={i} Icon={Icon} />
-              ))}
+            <div className="hidden lg:flex items-center gap-3 ">
+              <IconButton Icon={Heart} />
+              <IconButton Icon={ShoppingCart} />
+              <IconButton Icon={MapPin} />
+              {/* PROFILE ICON */}
+              <IconButton
+                Icon={User}
+                onClick={() => navigate("/profile")}
+              />
             </div>
           </div>
 
           {/* DESKTOP NAV */}
-          <nav className="hidden lg:flex items-center justify-between pb-4 text-base xl:text-lg ">
+          <nav className="hidden lg:flex items-center justify-between pb-4 text-base xl:text-lg">
             <div className="flex gap-30 xl:gap-40">
               <NavLink label="Home" href="/" />
               <NavLink label="About Us" href="/about" />
@@ -118,14 +118,14 @@ export default function Navbar() {
       <div
         onClick={() => setMenuOpen(false)}
         className={`fixed inset-0 z-40 bg-black/40 transition-opacity
-          ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+        ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
       />
 
       {/* Drawer */}
       <aside
         className={`fixed top-0 left-0 z-50 h-full w-[85%] max-w-[320px]
-          bg-[#0F231C] text-white transform transition-transform duration-300
-          ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        bg-[#0F231C] text-white transform transition-transform duration-300
+        ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 h-22">
@@ -161,7 +161,14 @@ export default function Navbar() {
           <div className="flex justify-between">
             <MobileAction Icon={Heart} label="Wishlist" />
             <MobileAction Icon={ShoppingCart} label="Cart" />
-            <MobileAction Icon={User} label="Account" />
+            <MobileAction
+              Icon={User}
+              label="Account"
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/profile");
+              }}
+            />
           </div>
         </div>
       </aside>
@@ -171,17 +178,23 @@ export default function Navbar() {
 
 /* ---------------- Reusable Components ---------------- */
 
-function IconButton({ Icon }) {
+function IconButton({ Icon, onClick }) {
   return (
-    <button className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EA] text-[#0F231C]">
+    <button
+      onClick={onClick}
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FBF6EA] text-[#0F231C] cursor-pointer"
+    >
       <Icon size={18} />
     </button>
   );
 }
 
-function MobileAction({ Icon, label }) {
+function MobileAction({ Icon, label, onClick }) {
   return (
-    <button className="flex flex-col items-center gap-1 text-sm">
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center gap-1 text-sm"
+    >
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#FBF6EA] text-[#0F231C]">
         <Icon size={20} />
       </div>
@@ -195,12 +208,11 @@ function NavLink({ label, href }) {
     <a
       href={href}
       className="relative text-[#CBA135] transition hover:text-white
-        after:absolute after:left-0 after:-bottom-1 after:h-0.5
-        after:w-0 after:bg-[#CBA135]
-        after:transition-all hover:after:w-full"
+      after:absolute after:left-0 after:-bottom-1 after:h-0.5
+      after:w-0 after:bg-[#CBA135]
+      after:transition-all hover:after:w-full"
     >
       {label}
     </a>
   );
 }
-  

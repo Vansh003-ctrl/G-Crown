@@ -1,7 +1,9 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { ChevronDown, X, SlidersHorizontal } from "lucide-react";
 import { FilterSidebar } from "../../components/filterSection";
-import earingImg from "../../assets/collectionPage/ear-ring.png";
+// import earingImg from "../../assets/collectionPage/ear-ring.png";
+import { useNavigate } from "react-router-dom";
+import { allProducts } from "../../assets/MockData";
 
 
 import shippingIcon from "../../assets/NewArrivalAssets/logos/la_shipping-fast.png";
@@ -9,29 +11,7 @@ import paymentIcon from "../../assets/NewArrivalAssets/logos/fluent_payment-32-r
 import supportIcon from "../../assets/NewArrivalAssets/logos/streamline-plump_customer-support-7.png";
 
 const Collections = () => {
-  // 1. Mock Data
-  const allProducts = useMemo(() => [
-    { id: 1, name: "Eternal Sparkle Diamond Ring", category: "Rings", material: "Gold", color: "White", price: 245000, oldPrice: 270000, reviews: 248, bestseller: true, image: earingImg },
-    { id: 2, name: "Classic Gold Bracelet", category: "Bracelets", material: "Gold", color: "Orange", price: 85000, oldPrice: 95000, reviews: 120, bestseller: false, image: earingImg },
-    { id: 3, name: "Platinum Rose Studs", category: "Earrings", material: "Platinum", color: "Blue", price: 150000, oldPrice: 180000, reviews: 85, bestseller: true, image: earingImg },
-    { id: 4, name: "Pearl Drop Earrings", category: "Earrings", material: "Pearl", color: "White", price: 45000, oldPrice: 50000, reviews: 310, bestseller: true, image: earingImg },
-    { id: 5, name: "Rose Gold Band", category: "Rings", material: "Rose Gold", color: "Orange", price: 65000, oldPrice: 75000, reviews: 150, bestseller: false, image: earingImg },
-    { id: 6, name: "Emerald Diamond Ring", category: "Rings", material: "Diamond Jewelry", color: "Green", price: 320000, oldPrice: 345000, reviews: 90, bestseller: true, image: earingImg },
-    { id: 7, name: "Grey Pearl Necklace", category: "Necklaces", material: "Pearl", color: "Grey", price: 125000, oldPrice: 140000, reviews: 45, bestseller: false, image: earingImg },
-    { id: 8, name: "Royal Gold Kangan", category: "Bangles", material: "Gold", color: "Orange", price: 185000, oldPrice: 200000, reviews: 65, bestseller: true, image: earingImg },
-    { id: 9, name: "Silver Dew Pendant", category: "Pendants", material: "Silver", color: "White", price: 12000, oldPrice: 15000, reviews: 110, bestseller: false, image: earingImg },
-    { id: 10, name: "Midnight Sapphire Ring", category: "Rings", material: "White Gold", color: "Blue", price: 175000, oldPrice: 195000, reviews: 62, bestseller: true, image: earingImg },
-    { id: 11, name: "Ruby Floral Studs", category: "Earrings", material: "Gold", color: "Red", price: 85000, oldPrice: 95000, reviews: 45, bestseller: false, image: earingImg },
-    { id: 12, name: "Diamond Tennis Bracelet", category: "Bracelets", material: "Platinum", color: "White", price: 450000, oldPrice: 500000, reviews: 15, bestseller: true, image: earingImg },
-    { id: 13, name: "Solitaire Diamond Pendant", category: "Pendants", material: "Rose Gold", color: "White", price: 120000, oldPrice: 135000, reviews: 88, bestseller: true, image: earingImg },
-    { id: 14, name: "Golden Leaf Bangle", category: "Bangles", material: "Gold", color: "Orange", price: 95000, oldPrice: 110000, reviews: 34, bestseller: false, image: earingImg },
-    { id: 15, name: "Silver Moonlight Choker", category: "Necklaces", material: "Silver", color: "Grey", price: 25000, oldPrice: 30000, reviews: 120, bestseller: false, image: earingImg },
-    { id: 16, name: "Classic Hoop Earrings", category: "Earrings", material: "Gold", color: "Orange", price: 35000, oldPrice: 40000, reviews: 210, bestseller: true, image: earingImg },
-    { id: 17, name: "Vintage Emerald Brooch", category: "Accessories", material: "Silver", color: "Green", price: 55000, oldPrice: 65000, reviews: 12, bestseller: false, image: earingImg },
-    { id: 18, name: "Infinity Love Ring", category: "Rings", material: "Rose Gold", color: "Orange", price: 42000, oldPrice: 48000, reviews: 310, bestseller: true, image: earingImg },
-    { id: 19, name: "Traditional Temple Necklace", category: "Necklaces", material: "Gold", color: "Orange", price: 580000, oldPrice: 620000, reviews: 25, bestseller: true, image: earingImg },
-    { id: 20, name: "Blue Topaz Drop Earrings", category: "Earrings", material: "White Gold", color: "Blue", price: 72000, oldPrice: 80000, reviews: 54, bestseller: false, image: earingImg },
-  ], []);
+  
 
   const MIN_LIMIT = 2500;
   const MAX_LIMIT = 600000;
@@ -209,9 +189,10 @@ const Collections = () => {
 
 
 
-const ProductCard = ({ product }) => {
+export const ProductCard = ({ product }) => {
+    const navigate = useNavigate();
   return (
-    <div className="bg-[#FFF9E9] relative rounded-md group">
+    <div className="bg-[#FFF9E9] relative rounded-md group cursor-pointer"  onClick={() => navigate(`/product/${product.id}`, { state: { product } })}>
       {product.bestseller && (
         <div className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-[#CBA135] text-[#FFFFFF] text-[8px] sm:text-[10px] px-2 py-0.5 font-normal z-10 tracking-widest">
           BESTSELLER
@@ -223,11 +204,11 @@ const ProductCard = ({ product }) => {
         </svg>
       </button>
 
-      <div className="h-48 sm:h-64 bg-gray-100 mb-4 overflow-hidden rounded-md">
+      <div className="h-48 sm:h-64 bg-gray-100 mb-4 overflow-hidden rounded-t-md">
         <img 
           src={product.image} 
           alt={product.name} 
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 " 
         />
       </div>
 
@@ -254,7 +235,7 @@ const ProductCard = ({ product }) => {
   );
 };
 
-const FeatureCard = ({ icon, title, description }) => (
+export const FeatureCard = ({ icon, title, description }) => (
   <div className="flex items-center gap-4 sm:gap-5 bg-white rounded-xl px-4 py-4 sm:px-6 sm:py-5 shadow-sm hover:shadow-md transition-all">
     <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-[#1C3A2C] shrink-0">
       <img src={icon} alt="" className="w-5 h-5 sm:w-6 sm:h-6" loading="lazy" />
